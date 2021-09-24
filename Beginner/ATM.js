@@ -3,18 +3,13 @@ process.stdin.setEncoding('utf8');
 
 // your code goes here
 
-const readline = require('readline').createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false
-});
 
-readline.on("line", line => {
-    let wda = parseInt(line.split(" ")[0]);
-    let bal = parseFloat(line.split(" ")[1]).toFixed(2);
-    if (isNaN(wda) || isNaN(bal)) return console.log("Not a number");
-    if (bal <= 0 || bal >= 2000 || wda <= 0 || wda >= 2000) return console.log("Wrong Input");
-    if (wda % 5 !== 0) return console.log(bal);
-    if (bal < wda) return console.log(bal);
+process.stdin.on('data', function (line) {
+    let wda = parseInt(line.split(' ')[0]);
+    let bal = parseFloat(line.split(' ')[1]);
+    if (wda % 5 !== 0 || bal - 0.50 < wda) {
+        console.log(bal.toFixed(2));
+        return;
+    }
     console.log((bal - wda - 0.50).toFixed(2));
-})
+});
